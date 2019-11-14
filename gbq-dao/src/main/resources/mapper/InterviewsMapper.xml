@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.gbq.mapper.InterviewsMapper">
+    <resultMap id="BaseResultMap" type="com.ssm.gbq.model.Interviews">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="iname" jdbcType="VARCHAR" property="iname"/>
+        <result column="iskill" jdbcType="TIMESTAMP" property="iskill"/>
+        <result column="idistrict" jdbcType="VARCHAR" property="idistrict"/>
+        <result column="iduration" jdbcType="VARCHAR" property="iduration"/>
+        <result column="idatatime" jdbcType="TIMESTAMP" property="idatatime"/>
+        <result column="istatus" jdbcType="VARCHAR" property="istatus"/>
+        <result column="icontent" jdbcType="VARCHAR" property="icontent"/>
+        <result column="iremark" jdbcType="VARCHAR" property="iremark"/>
+        <result column="insertdate" jdbcType="TIMESTAMP" property="insertdate"/>
+        <result column="modifydate" jdbcType="TIMESTAMP" property="modifydate"/>
+    </resultMap>
+
+    <sql id="interviews_str">
+        id,iname,iskill,idistrict,iduration,idatatime,istatus,icontent,iremark,insertdate,modifydate
+    </sql>
+    <select id="selectTest" resultType="java.lang.String">
+        select iname from interviews
+    </select>
+
+    <select id="selectInterviewsPage" resultMap="BaseResultMap">
+        select <include refid="InterviewsMapper.interviews_str"/> from interviews limit #{currentPage},#{pageSize}
+    </select>
+
+    <select id="selectInterviewsById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="InterviewsMapper.interviews_str"/> from interviews where id = #{id}
+    </select>
+
+    <select id="selectInterviewsCount" resultType="java.lang.Integer">
+ 	 select  count(id)  from interviews
+ 	 </select>
+
+
+
+    <delete id="delInterviewsById" parameterType="java.lang.Integer">
+        delete from interviews where id = #{id}
+    </delete>
+
+    <update id="updateInterviews" parameterType="com.ssm.gbq.model.Interviews">
+        update interviews set
+        <if test="iname != null ">
+            iname = #{iname,jdbcType = VARCHAR},
+        </if>
+        <if test="iskill != null">
+            iskill = #{iskill,jdbcType = VARCHAR},
+        </if>
+        <if test="idistrict != null">
+            idistrict = #{idistrict,jdbcType = VARCHAR}
+        </if>
+        <if test="iduration != null">
+            iduration = #{iduration,jdbcType = VARCHAR}
+        </if>
+        <if test="istatus != null">
+            istatus = #{istatus,jdbcType = VARCHAR}
+        </if>
+        <if test="icontent != null">
+            icontent = #{icontent,jdbcType = VARCHAR}
+        </if>
+        <if test="iremark != null">
+            iremark = #{iremark,jdbcType = VARCHAR}
+        </if>
+        where id = #{id,jdbcType = INTEGER}
+    </update>
+
+    <insert id="addInterviews" parameterType="com.ssm.gbq.model.Interviews">
+        insert into interviews
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="iname != null">
+                iname,
+            </if>
+            <if test="iskill != null">
+                iskill,
+            </if>
+            <if test="idistrict != null">
+                idistrict,
+            </if>
+            <if test="iduration != null">
+                iduration,
+            </if>
+            <if test="idatatime != null">
+                idatatime,
+            </if>
+            <if test="istatus != null">
+                istatus,
+            </if>
+            <if test="icontent != null">
+                icontent,
+            </if>
+            <if test="iremark != null">
+                iremark,
+            </if>
+            <if test="insertdate != null">
+                insertdate,
+            </if>
+            <if test="modifydate != null">
+                modifydate,
+            </if>
+        </trim>
+        values 
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="iname != null">
+                iname = #{iname,jdbcType = VARCHAR},
+            </if>
+            <if test="iskill != null">
+                iskill = #{iskill,jdbcType = VARCHAR},
+            </if>
+            <if test="idistrict != null">
+                idistrict = #{idistrct,jdbcType = VARCHAR},
+            </if>
+            <if test="iduration != null">
+                iduration = #{iduration,jdbcType = VARCHAR},
+            </if>
+            <if test="idatatime != null">
+                idatatime = #{idatatime,jdbcType = TIMESTAMP},
+            </if>
+            <if test="istatus != null">
+                istatus = #{istatus,jdbcType = VARCHAR},
+            </if>
+            <if test="icontent != null">
+                icontent = #{icontent,jdbcType = VARCHAR},
+            </if>
+            <if test="iremark != null">
+                iremark = #{iremark,jdbcType = VARCHAR},
+            </if>
+            <if test="insertdate != null">
+                insertdate = #{insertdate,jdbcType = TIMESTAMP},
+            </if>
+            <if test="modifydate != null">
+                modifydate = #{modifydate,jdbcType = TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+
+</mapper>
