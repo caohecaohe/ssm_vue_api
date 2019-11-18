@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,12 +34,14 @@ public class InterviewsControllerTest extends BaseTest{
         }
     }
 
-//    @Test
-//    public void getPageInterviews(){
-//        PageBounds<Interviews> pageBounds = interviewsController.getPageInterviews(null,2,3);
-//        List<Interviews>  list = pageBounds.getPageList();
-//        System.out.println(list);
-//    }
+    @Test
+    public void getPageInterviews(){
+        Interviews interviews = new Interviews();
+        interviews.setIname("张");
+        HashMap<String,Object> hashMap = interviewsController.getPageInterviews(interviews,2,1);
+        Object obje = hashMap.get("data");
+        System.out.println(obje);
+    }
 
 
 

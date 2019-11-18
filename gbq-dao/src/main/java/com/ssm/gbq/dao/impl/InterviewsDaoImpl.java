@@ -36,7 +36,7 @@ public class InterviewsDaoImpl implements InterviewsDao {
     public PageBounds<Interviews> getPageInterviews(Interviews interviews, Integer pageSize, Integer currentPage) {
         final int totalSize = interviewsMapper.selectInterviewsCount();
         PageBounds<Interviews> pageBounds = new PageBounds<Interviews>(currentPage, totalSize, pageSize);
-        List<Interviews> list = interviewsMapper.selectInterviewsPage(currentPage, pageSize);
+        List<Interviews> list = interviewsMapper.selectInterviewsPage(interviews,pageBounds.getOffset(), pageBounds.getPageSize());
         pageBounds.setPageList(list);
         return pageBounds;
     }

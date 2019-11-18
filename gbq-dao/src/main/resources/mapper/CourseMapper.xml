@@ -86,7 +86,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_course
     where id = #{id,jdbcType=INTEGER}
@@ -106,9 +106,9 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_course (className, cname, studentId, 
+    insert into t_course (className, cname, studentId,
       remark, teacherId)
-    values (#{className,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, #{studentId,jdbcType=INTEGER}, 
+    values (#{className,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, #{studentId,jdbcType=INTEGER},
       #{remark,jdbcType=VARCHAR}, #{teacherId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ssm.gbq.model.Course">
@@ -225,13 +225,13 @@
       teacherId = #{teacherId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
+
  <select id="selectCourseByTeacherId" parameterType="java.lang.Integer" resultType="com.ssm.gbq.model.Course">
-  	select 
+  	select
   	 <include refid="Base_Column_List" />
   	from t_course where id in (select courseId from t_teacher_course where teacherId = #{teacherId})
-  </select> 
-  
+  </select>
+
    <select id="selectByLimitPage" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" />,
         (select name from t_teacher where id = t_course.teacherId) as teacherName,
@@ -258,33 +258,33 @@
   <select id="selectArrTeacherById" parameterType="java.lang.Integer" resultType="com.ssm.gbq.model.Teacher">
   	select * from t_teacher where id in (select teacherId from t_teacher_course where courseId = #{id})
   </select>
-  
+
   <select id="countToTeacher" resultType="int">
   	select count(*) from t_teacher_course where courseId = #{courseId}
   </select>
-  
+
   <select id="selectToTeacherPage" resultType="com.ssm.gbq.model.Teacher">
   	select * from t_teacher where id in (select teacherId from t_teacher_course where courseId = #{courseId})
   </select>
-  
+
   <select id="countStudent" resultType="int">
   	select count(*) from t_student where courseId = #{courseId}
   </select>
-  
+
   <select id="selectToStudentPage" resultType="com.ssm.gbq.model.Student">
   	select *,
   	(SELECT sum(t_student_custom.customNum)/count(t_student_custom.id) from t_student_custom where t_student_custom.studentId = t_student.id) as customNumPj
   	 from t_student where courseId =#{courseId} order by customNumPj desc
   </select>
-  
+
    <insert id="courseToTeacher">
     insert into t_teacher_course(courseId,teacherId)
-    values 
+    values
     <foreach collection="teacherIds" index="index" item="item" separator=",">
 		(#{courseId},#{item})
 	</foreach>
   </insert>
-  
+
   <delete id="delCourseToTeacher" parameterType="java.lang.Integer">
     	delete from t_teacher_course
     	where courseId in

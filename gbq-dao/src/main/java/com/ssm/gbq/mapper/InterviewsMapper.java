@@ -9,7 +9,7 @@ public interface InterviewsMapper {
 
     String selectTest();
 
-    List<Interviews> selectInterviewsPage(@Param("currentPage")Integer currentPage,@Param("pageSize")Integer pageSize);
+    List<Interviews> selectInterviewsPage(@Param("interviews") Interviews interviews, @Param("offset")Integer Offset,@Param("pageSize")Integer pageSize);
 
     int selectInterviewsCount();
 

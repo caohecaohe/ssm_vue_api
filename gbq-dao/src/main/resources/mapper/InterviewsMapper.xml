@@ -23,11 +23,21 @@
     </select>
 
     <select id="selectInterviewsPage" resultMap="BaseResultMap">
-        select <include refid="InterviewsMapper.interviews_str"/> from interviews limit #{currentPage},#{pageSize}
+
+        select <include refid="interviews_str"/> from interviews
+              where 1=1
+            <if test="interviews.id != null">
+                and id = #{id}
+            </if>
+            <if test="interviews.iname != null">
+                <bind name="name_show" value="'%'+interviews.iname+'%'"/>
+                and iname like #{name_show}
+            </if>
+         limit #{offset},#{pageSize}
     </select>
 
     <select id="selectInterviewsById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select <include refid="InterviewsMapper.interviews_str"/> from interviews where id = #{id}
+        select <include refid="interviews_str"/> from interviews where id = #{id}
     </select>
 
     <select id="selectInterviewsCount" resultType="java.lang.Integer">
